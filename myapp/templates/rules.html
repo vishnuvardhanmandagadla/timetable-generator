@@ -1,0 +1,136 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>input rules</title>
+    <style>
+        body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background-color: #241b25; /* Light background color */
+}
+
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.container {
+    display: flex;
+    width: 80%;
+    height: 80vh;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+}
+
+.panel {
+    background-size: cover;
+    background-position: center;
+    flex: 1;
+    margin: 10px;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Box shadow */
+    transition: flex 0.7s ease-in-out, transform 0.3s ease-in-out;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden; /* Ensures description stays within panel */
+}
+
+.panel.active {
+    flex: 5;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Larger shadow for active panel */
+}
+
+.panel:not(.active) {
+    flex: 1;
+}
+
+.description {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 20px;
+    opacity: 0;
+    transition: opacity 0.7s ease-in-out;
+}
+
+.panel.active .description {
+    opacity: 1;
+}
+
+.exit-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #c60000;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: background 0.3s, transform 0.3s;
+    z-index: 1;
+}
+
+.exit-button:hover {
+    background: #ff4d4d;
+    transform: translateY(-3px);
+}
+    </style>
+</head>
+<body>
+    <canvas id="energyCanvas"></canvas>
+    <h3 style="position: absolute; top: 10px; left: 50%; transform: translateX(-50%); color: white;">Tap on the image bars to expand</h3>
+    <div class="container">
+        <div class="panel active" style="background-image: url('{% static 'image/lab_rooms1.png' %}');">
+            <div class="description"> <strong>no duplicates:</strong> each name of the lab_room in "lab_rooms.csv" file is unique as the algorithm generates timetables based on the selected column.</div>
+        </div>
+        <div class="panel" style="background-image: url('{% static 'image/lab_rooms2.png' %}');">
+            <div class="description"><strong>WINGS:</strong>If a lab room name includes "_1" or "_2", it indicates the left (1) and right (2) wings. For example,i f"CP_1"   is the lab_room name ,then :"M_CP_1_1" and "M_CP_1_2" , and "A_CP_1_1" and "A_CP_1_2" these will be the wings. <strong>MORNING AND AFTERNOON SLOTS:</strong>Here "M" indicates Morning slots, and "A" indicates Afternoon slots.</div>
+        </div>
+        <div class="panel" style="background-image: url('{% static 'image/p.png' %}');">
+            <div class="description"><strong>WINGS SPECIFICATION:</strong>In "labs.csv", we have to specify the wing for each lab as "CP_0_1" or "CP_0_2". Avoid using "M_"-> "M_CP_0_2", "A_"-> "A_CP_0_2" no need to mention morng or afternoon slot-it is dynamically selected.</div>
+        </div>
+        <div class="panel" style="background-image: url('{% static 'image/course.png' %}');">
+            <div class="description">In "courses.csv", we have a feature called " importance".which decides howmany times a period repeats in the time table.this importance should be given by the user.there are 30 remaining periods for courses. Prioritize each course accordingly.<strong>CASE SENSITIVE:</strong> Ensure faculty names are unique and case-sensitive(if faculty name is in samll letters,then it should be in the same letters where ever it repeats.for eg:name="rambabureddy" it shouldbe same in every place).</div>
+        </div>
+        <div class="panel" style="background-image: url('{% static 'image/p.png' %}');">
+            <div class="description"><strong>SLICING:</strong>1-in slice colum indicates -slicing or sharing,0-indicates not to slice.<strong>order of labs</strong>place the labs in order such that all the slicing labs should be first entered ,and non-slicing labs should be next,or vice versa</div>
+        </div>
+    </div>
+    <button class="exit-button" onclick="inputpage()">Return to INPUT page</button>
+    
+
+    <script src="{% static 'js/interactive-background.js' %}"></script>
+    <script src="{% static 'js/image-gallery.js' %}"></script>
+    <script>
+        function inputpage() {
+            location.href = '{% url "inputs" %}'; // Redirects to the help page URL
+        }
+    </script>
+</body>
+</html>

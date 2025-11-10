@@ -1,0 +1,463 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Outputs Page</title>
+    <!--<link rel="stylesheet" href="styles.css">  Link to your CSS file -->
+    <style>
+        body {
+            margin: 0;
+            background-color: #3399ff;
+            font-family: 'Source Sans Pro', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column; /* Adjusted to column layout */
+            min-height: 100vh; /* Ensure full height */
+            position: relative; /* Add for ripple background positioning */
+        }
+
+        .ripple-background {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            z-index: -1; /* Send ripple background behind content */
+        }
+
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            background: white;
+            animation: ripple 15s infinite;
+            box-shadow: 0px 0px 1px 0px #508fb9;
+        }
+
+        .small {
+            width: 200px;
+            height: 200px;
+            left: -100px;
+            bottom: -100px;
+        }
+
+        .medium {
+            width: 400px;
+            height: 400px;
+            left: -200px;
+            bottom: -200px;
+        }
+
+        .large {
+            width: 600px;
+            height: 600px;
+            left: -300px;
+            bottom: -300px;
+        }
+
+        .xlarge {
+            width: 800px;
+            height: 800px;
+            left: -400px;
+            bottom: -400px;
+        }
+
+        .xxlarge {
+            width: 1000px;
+            height: 1000px;
+            left: -500px;
+            bottom: -500px;
+        }
+
+        .shade1 {
+            opacity: 0.1;
+        }
+
+        .shade2 {
+            opacity: 0.3;
+        }
+
+        .shade3 {
+            opacity: 0.5;
+        }
+
+        .shade4 {
+            opacity: 0.7;
+        }
+
+        .shade5 {
+            opacity: 0.9;
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(4);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .leaderboard-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .leaderboard {
+            max-width: 490px;
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 0 40px -10px rgba(0, 0, 0, .4);
+            margin-bottom: 20px;
+            overflow-y: auto; /* Add scrollbar for overflow */
+            flex: 1 1 45%; /* boards sidebye side*/
+        }
+        .exit-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #c60000;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: background 0.3s;
+        }
+
+        .exit-button:hover {
+            background: #666;
+        }
+
+        .leaderboard header {
+            --start: 15%;
+            height: 130px;
+            background-image: repeating-radial-gradient(circle at var(--start), transparent 0%, transparent 10%, rgba(54, 89, 219, .33) 10%, rgba(54, 89, 219, .33) 17%), linear-gradient(to right, #5b7cfa, #3659db);
+            color: #fff;
+            position: relative;
+            border-radius: 12px 12px 0 0;
+            overflow: hidden;
+        }
+
+        .leaderboard header .leaderboard__title {
+            position: absolute;
+            z-index: 2;
+            top: 50%;
+            right: calc(var(--start) * .75);
+            transform: translateY(-50%);
+            text-transform: uppercase;
+            margin: 0;
+        }
+
+        .leaderboard header .leaderboard__title span {
+            display: block;
+        }
+
+        .leaderboard header .leaderboard__title--top {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 6.5px;
+        }
+
+        .leaderboard header .leaderboard__title--bottom {
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 3.55px;
+            opacity: .65;
+            transform: translateY(-2px);
+        }
+
+        .leaderboard header .leaderboard__icon {
+            fill: #fff;
+            opacity: .35;
+            width: 50px;
+            position: absolute;
+            top: 50%;
+            left: var(--start);
+            transform: translate(-50%, -50%);
+        }
+
+        .leaderboard .leaderboard__profiles {
+            background-color: #fff;
+            border-radius: 0 0 12px 12px;
+            padding: 15px 15px 20px;
+            overflow-y: auto; /* Add scrollbar for overflow */
+            max-height: 300px; /* Limit the height for scrollbar */
+        }
+
+        .leaderboard .leaderboard__profile {
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* Added for download button positioning */
+            padding: 10px 30px 10px 10px;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 5px 7px -1px rgba(51, 51, 51, 0.23);
+            cursor: pointer;
+            transition: transform .25s cubic-bezier(.7,.98,.86,.98), box-shadow .25s cubic-bezier(.7,.98,.86,.98);
+            background-color: #fff;
+            margin-bottom: 10px;
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .leaderboard .leaderboard__profile:last-child {
+            margin-bottom: 0;
+        }
+
+        .leaderboard .leaderboard__profile:hover {
+            transform: scale(1.02);
+            box-shadow: 0 9px 47px 11px rgba(51, 51, 51, 0.18);
+        }
+
+        .leaderboard .leaderboard__name {
+            color: #979cb0;
+            font-weight: 600;
+            font-size: 20px;
+            letter-spacing: 0.64px;
+            margin-left: 12px;
+            flex: 1;
+        }
+
+        .leaderboard .leaderboard__value {
+            color: #35d8ac;
+            font-weight: 700;
+            font-size: 24px;
+            text-align: right;
+        }
+
+        .leaderboard .leaderboard__value span {
+            opacity: .8;
+            font-weight: 600;
+            font-size: 13px;
+            margin-left: 3px;
+        }
+
+        .download-btn {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 8px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-left: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .download-btn:hover {
+            background-color: #45a049;
+        }
+
+        /* Style for Easy Download heading */
+        .easy-download {
+            font-size: 30px;
+            font-weight: bold;
+            color: #020058;
+            text-shadow: 0 0 10px #5b7cfa;
+            cursor: pointer;
+            transition: text-shadow 0.3s;
+            margin-bottom: 20px; /* Add space between heading and leaderboards */
+        }
+
+        .easy-download:hover {
+            text-shadow: 0 0 30px #2e75e0;
+        }
+
+        /* Style for Lab Rooms Bar */
+        .lab-rooms-bar {
+    position: relative; 
+    max-width: 1000px;
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 0 40px -10px rgba(0, 0, 0, .4);
+    margin: 20px 0;
+    overflow-y: auto;
+    height: 130px;
+    background-image: repeating-radial-gradient(circle at 15%, transparent 0%, transparent 10%, rgba(54, 89, 219, .33) 10%, rgba(54, 89, 219, .33) 17%), linear-gradient(to right, #5b7cfa, #3659db 33%, white 33%);
+    background-size: 33% 100%, 100% 100%; /* First background occupies one-third, second covers the whole */
+    background-repeat: no-repeat;
+    background-position: left;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px; /* Add some padding for better alignment */
+    justify-content: space-between; /* Space content evenly */
+    
+}
+
+        .lab-rooms-bar header {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: 100%;
+            padding: 0 20px;
+        }
+
+        .lab-rooms-bar .lab-rooms-title {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 6.5px;
+        }
+
+
+        .lab-rooms-content {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+
+.lab-rooms-bar .lab-rooms-bar__name {
+            color: #979cb0;
+            font-weight: 600;
+            font-size: 30px;
+            letter-spacing: 0.64px;
+            margin-left: 12px;
+            flex: 1;
+            padding: 15%;
+        }
+
+.lab-rooms-bar .download-btn {
+    position: absolute;
+    top: 50%;
+    left: calc(78% + 20px); /* Position within the white space */
+    transform: translateY(-50%);
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 8px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.lab-rooms-bar .download-btn:hover {
+    background-color: #45a049;
+}
+    </style>
+</head>
+<body>
+    <div class="ripple-background">
+        <div class="circle xxlarge shade1"></div>
+        <div class="circle xlarge shade2"></div>
+        <div class="circle large shade3"></div>
+        <div class="circle medium shade4"></div>
+        <div class="circle small shade5"></div>
+    </div>
+    <div class="container">
+        <h1 class="easy-download">
+            Easy Download
+            <i class="fas fa-download" style="margin-left: 10px; font-size: 24px;"></i>
+        </h1>
+        
+        <div class="leaderboard-container">
+            <!-- Leaderboard 1: Department Timetables -->
+            <div class="leaderboard">
+                <header>
+                    <div class="leaderboard__title">
+                        <span class="leaderboard__title--top">Department Timetable</span>
+                        <span class="leaderboard__title--bottom">Updated: July 2024</span>
+                    </div>
+                    <svg class="leaderboard__icon" viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-1 17h2v-2h-2v2zm0-4h2V7h-2v8z"></path>
+                    </svg>
+                </header>
+                <div class="leaderboard__profiles">
+                    <!-- Department Timetable profiles will be dynamically generated here -->
+                    {% for file_name in department_file_names %}
+                    <div class="leaderboard__profile">
+                        <div class="leaderboard__name">{{ file_name }}</div>
+                        <button class="download-btn" onclick="downloadTimetable('{{ file_name }}', 'DEPARTMENT_timetables')">Download</button>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Leaderboard 2: Faculty Timetables -->
+            <div class="leaderboard">
+                <header>
+                    <div class="leaderboard__title">
+                        <span class="leaderboard__title--top">Faculty Timetables</span>
+                        <span class="leaderboard__title--bottom">Updated: July 2024</span>
+                    </div>
+                    <svg class="leaderboard__icon" viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-1 17h2v-2h-2v2zm0-4h2V7h-2v8z"></path>
+                    </svg>
+                </header>
+                <div class="leaderboard__profiles">
+                    <!-- Faculty Timetable profiles will be dynamically generated here -->
+                    {% for file_name in faculty_file_names %}
+                    <div class="leaderboard__profile">
+                        <div class="leaderboard__name">{{ file_name }}</div>
+                        <button class="download-btn" onclick="downloadTimetable('{{ file_name }}', 'FACULTY_timetables')">Download</button>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Lab Rooms Bar -->
+        <div class="lab-rooms-bar">
+            <header>
+                <div class="lab-rooms-content">Lab Rooms Timetable</div>
+                <div class="lab-rooms-bar__name">lab_rooms.csv</div>
+                <button class="download-btn" onclick="downloadLabRoomsCSV()">Download</button>
+            </header>
+        </div>
+        
+        
+        <button class="exit-button" onclick="goToHomePage()">Exit</button>
+    </div>
+    <script>
+        function goToHomePage() {
+            const container = document.querySelector('.container');
+            
+            setTimeout(() => {
+                location.href = '/'; // Redirects to the root URL (index view)
+            }, 1); // Duration of the animation in milliseconds
+        }
+
+        function downloadTimetable(fileName, folder) {
+            const url = `/media/${folder}/${fileName}`;
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = fileName;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+        function downloadLabRoomsCSV() {
+        const fileName = 'lab_rooms.csv';
+        const url = `/media/${fileName}`;
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = fileName;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+    </script>
+</body>
+
+</html>
