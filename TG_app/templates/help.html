@@ -1,0 +1,193 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Containers with Descriptions and Navigation</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #000000;
+            position: relative;
+            overflow: hidden;
+        }
+        .slider {
+            display: flex;
+            transition: transform 0.5s ease;
+            width: 100%;
+        }
+        .container {
+            position: relative;
+            width: 600px;
+            margin: 20px;
+            overflow: hidden;
+            flex: none;
+            transition: width 0.5s ease, filter 0.5s ease;
+            filter: blur(2px);
+            border-radius: 1cm;
+        }
+        .container.active {
+            filter: none;
+        }
+        .container:hover {
+            width: 700px;
+            filter: none;
+        }
+        .image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .description {
+            display: none;
+            background: rgba(238, 238, 238, 0.812);
+            color: rgb(0, 0, 0);
+            padding: 20px;
+            box-sizing: border-box;
+            transition: transform 0.5s ease;
+        }
+        .container:hover .description {
+            display: block;
+        }
+        .nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 3em;
+            color: black;
+            cursor: pointer;
+            z-index: 1000;
+            user-select: none;
+        }
+        .nav-arrow.left {
+            left: 10px;
+        }
+        .nav-arrow.right {
+            right: 10px;
+        }
+        .exit-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #c60000;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: background 0.3s;
+        }
+
+        .exit-button:hover {
+            background: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-arrow left" onclick="prevImage()">&#10094;</div>
+    <div class="nav-arrow right" onclick="nextImage()">&#10095;</div>
+    <div class="slider">
+        <div class="container">
+            <img src="{% static 'image/1.png' %}"alt="Image 1" class="image">
+            <div class="description">
+                <strong>HOME PAGE:</strong><br>
+                - Displays the home page of the application.<br>
+                - Features three prominent buttons:<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;- <strong>Inputs</strong> - Clicking this button will take you to the Inputs page, where you can upload or manage your data files.<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;- <strong>Generate Timetable</strong> - This button initiates the timetable generation process based on the data provided. It processes the input files and creates the required timetables.<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;- <strong>Outputs</strong> - Clicking here directs you to the Outputs page, where you can download the generated timetables and view the results.
+            </div>
+        </div>
+        <div class="container">
+            <img src="{% static 'image/2.png' %}" alt="Image 2" class="image">
+            <div class="description">
+                <strong>INPUTS PAGE:</strong><br>
+                - This image shows a page designed for managing and uploading data files relevant to the application's functionalities.<br>
+                - The page features three distinct buttons:<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;- <strong>Labs</strong> - by clicking on the labs button u can upload a labs.csv file.<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;- <strong>Courses</strong> - by clicking on the course button uc can upload a courses.csv file.<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;- <strong>Lab Rooms</strong> - Upload CSV files detailing lab room information.<br>
+                - <strong>Important Note:</strong> Only files in CSV (Comma-Separated Values) format are accepted.
+            </div>
+        </div>
+        <div class="container">
+            <img src="{% static 'image/3.png' %}" alt="Image 3" class="image">
+            <div class="description">
+                <strong>GENERATE TIMETABLE:</strong><br>
+                - Illustrates the action that occurs when you click the "Generate Timetable" button on the home page.<br>
+                - A popup dialog appears at the top with the message "Generating Timetables."<br>
+                - Click the "OK" button on the popup to confirm and start the timetable generation process.
+            </div>
+        </div>
+        <div class="container">
+            <img src="{% static 'image/3.2.png' %}" alt="Image 4" class="image">
+            <div class="description">
+                <strong>PROCESSING:</strong><br>
+                - Provides information about the time required to generate the timetable after clicking "Generate Timetable."<br>
+                - Displays a progress indicator or message indicating that the system is processing the data.<br>
+                - The generation may take a few seconds, depending on the data size and complexity.<br>
+                - Wait patiently as the system completes the task.
+            </div>
+        </div>
+        <div class="container">
+            <img src="{% static 'image/4.png' %}" alt="Image 5" class="image">
+            <div class="description">
+                <strong>OUTPUTS:</strong><br>
+                - Represents the Outputs page, accessed by clicking the "Outputs" button on the home page.<br>
+                - Organized into three boards:<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;- <strong>Department Timetables</strong> - Displays timetables for each department. Click "Download" to save.<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;- <strong>Faculty Timetables</strong> - Provides timetables for individual faculty members. Click "Download" to save.<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;- <strong>Lab Rooms Timetables</strong> - Shows timetables for lab rooms. Click "Download" to save.<br>
+                - <strong>General Note:</strong> Download buttons allow you to save the timetable files directly to your device.
+            </div>
+        </div>
+    </div>
+
+    <button class="exit-button" onclick="goToHomePage()">Exit</button>
+    <script>
+        function goToHomePage() {
+            const container = document.querySelector('.container');
+            setTimeout(() => {
+                location.href = '/'; // Redirects to the root URL (index view)
+            }, 1); // Duration of the animation in milliseconds
+        }
+        let currentIndex = 0;
+        const containers = document.querySelectorAll('.container');
+        const slider = document.querySelector('.slider');
+
+        function showImage(index) {
+            const width = containers[0].offsetWidth + 40; // container width + margin
+            slider.style.transform = `translateX(${-index * width}px)`;
+            updateActiveContainer();
+        }
+
+        function prevImage() {
+            currentIndex = (currentIndex > 0) ? currentIndex - 1 : containers.length - 1;
+            showImage(currentIndex);
+        }
+
+        function nextImage() {
+            currentIndex = (currentIndex < containers.length - 1) ? currentIndex + 1 : 0;
+            showImage(currentIndex);
+        }
+
+        function updateActiveContainer() {
+            containers.forEach((container, i) => {
+                container.classList.remove('active');
+                if (i === currentIndex) {
+                    container.classList.add('active');
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            showImage(currentIndex);
+        });
+    </script>
+</body>
+</html>

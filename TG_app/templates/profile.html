@@ -1,0 +1,384 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url("{% static 'image/background.jpg' %}") no-repeat center center fixed;
+            background-size: cover;
+            color: black; /* Text color */
+        }
+
+        header {
+            background-color: rgba(255, 255, 255, 0.8);
+            color: black;
+            padding: 1em 0;
+            text-align: center;
+        }
+
+        section {
+            width: 80%; /* Reduced width */
+            max-width: 1000px; /* Set a maximum width */
+            margin: 2em auto; /* Center the card */
+            padding: 1em;
+            background-color: rgba(255, 255, 255, 0.452); /* Semi-transparent background */
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+            color: black; /* Text color */
+        }
+
+        section:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2);
+            background-color: rgba(255, 255, 255, 1); /* Fully opaque on hover */
+        }
+
+        h2 {
+            color: #333; /* Darker shade for headers */
+        }
+
+        .profile-images {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2em;
+            margin-bottom: 1em;
+        }
+
+        .profile-image {
+            text-align: center;
+        }
+
+        .profile-image img {
+            width: 200px; /* Increased size */
+            height: 200px; /* Increased size */
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #333;
+            animation: glowing 1.5s infinite alternate;
+        }
+
+        .handshake-image img {
+            width: 250px; /* Increased width for the handshake image */
+            height: auto; /* Maintain aspect ratio */
+            object-fit: contain; /* Ensure the image fits within the given dimensions */
+            border-radius: 10px; /* Slightly rounded corners */
+            border: none; /* Remove border */
+        }
+
+        @keyframes glowing {
+            0% {
+                box-shadow: 0 0 5px #333;
+            }
+            50% {
+                box-shadow: 0 0 20px rgba(255, 105, 180, 0.8);
+            }
+            100% {
+                box-shadow: 0 0 5px #333;
+            }
+        }
+
+        .profile-image p {
+            margin-top: 0.5em;
+            font-weight: bold;
+            color: black; /* Ensures profile name text is black */
+        }
+
+        footer {
+            text-align: center;
+            padding: 1em 0;
+            background-color: rgba(255, 255, 255, 0.8);
+            color: black; /* Changed text color to black */
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        .exit-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #c60000;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: background 0.3s;
+        }
+
+        .exit-button:hover {
+            background: #666;
+        }
+
+        .linkedin-links, .email-links {
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
+            align-items: center;
+        }
+
+        .linkedin-link, .email-link {
+            color: #0073b1;
+            text-decoration: none;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5em;
+        }
+
+        .linkedin-link:hover, .email-link:hover {
+            text-decoration: underline;
+        }
+
+        .linkedin-link img, .email-link img {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* Projects Section Styles */
+        .projects-container {
+            display: flex;
+            flex-direction: column;
+            gap: 2em;
+            margin-top: 1em;
+        }
+
+        .project-card {
+            display: flex;
+            background: #f18e36;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease;
+            min-height: 350px;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .project-left-section {
+            background: #f18e36;
+            flex: 0 0 30%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 30px 20px;
+            position: relative;
+            align-items: center;
+        }
+
+        .project-right-section {
+            background: #000000;
+            flex: 0 0 70%;
+            padding: 30px 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .project-icon {
+            font-size: 48px;
+            color: #000000;
+            margin-bottom: 20px;
+        }
+
+        .project-quote {
+            color: white;
+            font-style: italic;
+            font-size: 16px;
+            line-height: 1.4;
+            margin-bottom: 20px;
+        }
+
+        .project-admin-btn {
+            background: #000000;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 13px;
+            transition: background 0.3s ease;
+            width: auto;
+            max-width: 120px;
+        }
+
+        .project-admin-btn:hover {
+            background: #333;
+        }
+
+        .project-title {
+            color: #f97316;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0 0 20px 0;
+            text-align: center;
+        }
+
+        .project-duration {
+            color: white;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .tech-stack {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .tech-tag {
+            background: #1f2937;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .project-description {
+            color: white;
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            word-wrap: break-word;
+        }
+
+        .project-impact {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #1f2937;
+            color: white;
+            padding: 12px 18px;
+            border-radius: 10px;
+            font-size: 14px;
+            word-wrap: break-word;
+            margin-right: 70px;
+        }
+
+        .impact-icon {
+            font-size: 20px;
+        }
+
+        .project-link-btn {
+            background: #f97316;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: background 0.3s ease;
+            font-size: 14px;
+            margin-top: 15px;
+            margin-right: 90px;
+        }
+
+        .project-link-btn:hover {
+            background: #ea580c;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to Our Profile</h1>
+    </header>
+    <section id="about-us">
+        <h2>About Us</h2>
+        <div class="profile-images">
+            <div class="profile-image">
+                <img src="{% static 'image/durga.jpeg' %}" alt="Durga Shankar">
+                <p>Durga Shankar</p>
+            </div>
+            <div class="handshake-image">
+                <img src="{% static 'image/shakehand.png' %}" alt="Handshake">
+            </div>
+            <div class="profile-image">
+                <img src="{% static 'image/vishnu.jpeg' %}" alt="Vishnu Vardhan">
+                <p>Vishnu Vardhan</p>
+            </div>
+        </div>
+        <p>We are <strong>Durga Shankar</strong> and <strong>Vishnu Vardhan</strong>, passionate full-stack developers dedicated to solving real-world academic challenges through innovative technology solutions.</p>
+        <p>Our expertise lies in building intelligent timetable generation systems that seamlessly integrate labs and courses while ensuring optimal scheduling. We leverage advanced algorithms to eliminate faculty collisions and maximize resource utilization, making academic planning effortless and efficient.</p>
+        <p>Together, we combine creativity with technical excellence to deliver scalable, user-friendly applications that make a meaningful impact in educational institutions.</p>
+    </section>
+
+    <section id="projects">
+        <h2>Our Next Project</h2>
+        <div class="projects-container">
+            <!-- Student Communication Platform -->
+            <div class="project-card">
+                <div class="project-left-section">
+                    <div class="project-icon">🎓</div>
+                    <div class="project-quote">Managing with ease and efficiency.</div>
+                    <button class="project-admin-btn">VS Project</button>
+                </div>
+                
+                <div class="project-right-section">
+                    <div>
+                        <h3 class="project-title">Student Communication Platform</h3>
+                        <div class="project-duration">📅 Duration: May 2023 - Aug 2023</div>
+                        
+                        <div class="tech-stack">
+                            <span class="tech-tag">⚛️ React</span>
+                            <span class="tech-tag">🟢 Node.js</span>
+                            <span class="tech-tag">🔥 Firebase</span>
+                        </div>
+                        
+                        <div class="project-description">
+                            Scalable real-time chat system supporting 500+ concurrent users with seamless message delivery and user management.
+                        </div>
+                        
+                        <div class="project-impact">
+                            <span class="impact-icon">🚀</span>
+                            <strong>Impact:</strong> Enhanced collaboration between students and faculty, improving efficiency by 70%
+                        </div>
+                    </div>
+                    
+                    <a href="https://student-communication-vs.web.app/" target="_blank" class="project-link-btn">
+                        🚀 Visit Project
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2>Emails:</h2>
+        <p>If you'd like to get in touch, feel free to reach out via emails at:</p>
+        <div class="email-links">
+            <a class="email-link" href="mailto:durga369shankar@gamil.com">
+                <img src="{% static 'image/Email.jpg' %}" alt="Email">durga369shankar@gamil.com
+            </a>
+            <a class="email-link" href="mailto:vishnuvardhanmandagadla@gmail.com">
+                <img src="{% static 'image/Email.jpg' %}" alt="Email">vishnuvardhanmandagadla@gmail.com
+            </a>
+        </div>
+    </section>
+        
+    <button class="exit-button" onclick="goToHomePage()">Return To HOME</button>
+<script>
+function goToHomePage() {
+    setTimeout(() => {
+        location.href = '/'; // Redirects to the root URL (index view)
+    }, 1); // Duration of the animation in milliseconds
+}</script>
+</body>
+</html>

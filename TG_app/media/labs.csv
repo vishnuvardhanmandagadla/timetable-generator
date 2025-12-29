@@ -1,0 +1,23 @@
+academic_year,department,faculty,lab_name,room_no,slice,importance
+year3,CSE_A,gopi,CN LAB,CP_3_1,1,2
+year3,CSE_A,ramakrishna,SOC LAB,CP_1_1,1,2
+year3,CSE_A,sathishkumar,ES LAB,CP_0_1,1,2
+year3,CSE_A,rafath,DWDM LAB,CP_3_2,1,2
+year3,CSE_B,gopi,CN LAB,CP_3_1,1,2
+year3,CSE_B,ramakrishna,SOC LAB,CP_1_1,1,2
+year3,CSE_B,sathishkumar,ES LAB,CP_0_1,1,2
+year3,CSE_B,rafath,DWDM LAB,CP_3_2,1,2
+year3,AIML,cse_new1,CD LAB,CP_3_1,1,2
+year3,AIML,joshmeri,OS LAB,CP_3_1,1,2
+year3,AIML,sharma,ML LAB,CP_1_1,1,2
+year3,AIML,murthy,SE LAB,CP_0_2,1,2
+year3,AIML,cse_new2,SOC LAB,CP_1_2,1,1
+year3,AIML,swathi,ES LAB,CP_0_1,1,1
+year3,DS,cse_new2,CD LAB,CP_3_1,1,2
+year3,DS,joshmeri,OS LAB,CP_3_1,1,2
+year3,DS,sharma,ML LAB,CP_1_1,1,2
+year3,DS,murthy,SE LAB,CP_0_2,1,2
+year3,DS,cse_new3,SOC LAB,CP_1_2,1,1
+year3,DS,swathi,ES LAB,CP_0_1,1,1
+year4,CSE_A,ramakrishna,SO&MS LAB,CP_1_1,0,2
+year4,CSE_B,ramakrishna,SO&MS LAB,CP_1_1,0,2

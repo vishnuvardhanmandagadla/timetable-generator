@@ -1,0 +1,22 @@
+Day,09:00 - 10:00,10:00 - 10:50,11:10 - 12:00,12:00 - 12:50,Lunch Break,01:30 - 02:20,02:20 - 03:10,03:10 - 04:00
+Monday,"CN LAB (gopi), SOC LAB (ramakrishna)","CN LAB (gopi), SOC LAB (ramakrishna)","CN LAB (gopi), SOC LAB (ramakrishna)",NCES (jaykumar),Lunch Break,NCES (jaykumar),DAA (rambabu),CN (gopi)
+Tuesday,DAA (rambabu),"ES LAB (sathishkumar), DWDM LAB (rafath)","ES LAB (sathishkumar), DWDM LAB (rafath)","ES LAB (sathishkumar), DWDM LAB (rafath)",Lunch Break,DAA (rambabu),SPM (jyothi),NCES (jaykumar)
+Wednesday,SPM (jyothi),NCES (jaykumar),SPM (jyothi),DWDM (rafath),Lunch Break,"CN LAB (gopi), SOC LAB (ramakrishna)","CN LAB (gopi), SOC LAB (ramakrishna)","CN LAB (gopi), SOC LAB (ramakrishna)"
+Thursday,"ES LAB (sathishkumar), DWDM LAB (rafath)","ES LAB (sathishkumar), DWDM LAB (rafath)","ES LAB (sathishkumar), DWDM LAB (rafath)",CN (gopi),Lunch Break,CN (gopi),NCES (jaykumar),SPM (jyothi)
+Friday,CN (gopi),DWDM (rafath),CN (gopi),DWDM (rafath),Lunch Break,SPM (jyothi),DAA (rambabu),Free
+Saturday,DWDM (rafath),DAA (rambabu),DWDM (rafath),Free,Lunch Break,Free,Free,Free
+
+
+Faculty and Courses for Year year3, Department CSE_A:
+ faculty course
+    gopi     CN
+jaykumar   NCES
+  jyothi    SPM
+  rafath   DWDM
+ rambabu    DAA
+Faculty and Labs for Year year3, Department CSE_A:
+     faculty lab_name
+        gopi   CN LAB
+      rafath DWDM LAB
+ ramakrishna  SOC LAB
+sathishkumar   ES LAB
